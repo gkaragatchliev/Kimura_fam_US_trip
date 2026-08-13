@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gkaragatchliev.github.io/Kimura_fam_US_trip/sitemap.xml
