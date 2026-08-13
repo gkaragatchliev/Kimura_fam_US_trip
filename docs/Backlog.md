@@ -68,7 +68,7 @@ to GitHub Pages, verify on a phone.
 | P0 | S6 | Accessibility + responsive QA | TS-10 → TS-13 | ✅ DONE |
 | P0 | S6 | Cache-busting query strings (`?v=N`) | TS-11 | ✅ DONE |
 | P0 | S6 | XSS escaping pass | TS-10 | ✅ DONE |
-| P0 | S6 | Deploy to GitHub Pages + phone verification | — | ⬜ NOT STARTED |
+| P0 | S6 | Deploy to GitHub Pages + phone verification | — | ✅ DONE — live at https://gkaragatchliev.github.io/Kimura_fam_US_trip/ |
 | P1 | S6 | Launch readiness: OG/Twitter meta, favicon, robots.txt, sitemap.xml, 404 | TS-13 | ✅ DONE |
 | P2 | Future | Offline caching (service worker) if family reports poor signal | — | ⬜ NOT STARTED |
 

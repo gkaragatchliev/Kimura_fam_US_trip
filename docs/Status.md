@@ -4,14 +4,18 @@
 
 ## Current Status
 
-**All 54 tests pass — the site is feature-complete and launch-ready.** Foundation, design
+**All 54 tests pass — the site is feature-complete, deployed, and live.** Foundation, design
 system, all 12 day cards, detail panel (TS-01 → TS-04), full bilingual JP/EN toggle with
 persistence (TS-05), one-click directions (TS-06), live NWS weather + fallback (TS-07),
 AirNow AQI + fallback (TS-08), smoke alert banner at AQI ≥ 101 (TS-09), XSS escaping +
 link integrity (TS-10), cache-busting `?v=N` + perf/QA (TS-11), accessibility & responsive
-breakpoints (TS-12), and launch readiness meta/favicon/robots/sitemap/404 (TS-13) are all
-implemented and green. Remaining only: **deploy to GitHub Pages + phone verification**
-(backlog item `P0 | S6 | Deploy`). Open items (⏳CONFIRM in `PRD.md` §13) still pending.
+breakpoints (TS-12), launch readiness meta/favicon/robots/sitemap/404 (TS-13), and
+kid-friendly drive-stop dining (TS-03b) are all implemented and green.
+
+**Deployed to GitHub Pages (public): https://gkaragatchliev.github.io/Kimura_fam_US_trip/**
+Verified live: all 12 day cards render, weather + AQI slots present, Day 2 shows 4 dining
+stops, every asset returns 200. **Remaining (manual):** phone verification and confirming
+the open ⏳CONFIRM items in `PRD.md` §13. Optional future: offline caching service worker.
 
 ## Phase / Sprint Status
 
@@ -22,7 +26,7 @@ implemented and green. Remaining only: **deploy to GitHub Pages + phone verifica
 | Sprint 3 — Bilingual JP/EN | ✅ COMPLETE — 4/4 (TS-05) |
 | Sprint 4 — Directions & Weather | ✅ COMPLETE — 6/6 (TS-06 → TS-07) |
 | Sprint 5 — Air Quality & Smoke | ✅ COMPLETE — 6/6 (TS-08 → TS-09) |
-| Sprint 6 — Polish & Launch | 🔶 IN PROGRESS — TS-10 (XSS), TS-11 (perf/QA/cache), TS-12 (a11y/responsive), TS-13 (launch meta) all done; deploy + phone verify pending |
+| Sprint 6 — Polish & Launch | ✅ COMPLETE — TS-10 (XSS), TS-11 (perf/QA/cache), TS-12 (a11y/responsive), TS-13 (launch meta) all done; **deployed to GitHub Pages** |
 
 ---
 
