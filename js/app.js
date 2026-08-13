@@ -50,6 +50,7 @@
     saveLang();
     document.documentElement.setAttribute("lang", lang);
     document.documentElement.setAttribute("data-lang", lang);
+    renderStatic();
     renderDayCards();
     syncLangToggle();
   }
@@ -94,7 +95,7 @@
   function mapsLink(item) {
     if (!item.maps) { return ""; }
     return '<a class="maps-link" href="' + escapeHtml(item.maps) + '" target="_blank" rel="noopener">' +
-      '🧭 ' + t({ jp: "道順 / 地図", en: "Directions / Map" }) +
+      '🧭 ' + t({ jp: "道順", en: "Directions" }) +
       '</a>';
   }
 
@@ -126,16 +127,12 @@
   }
 
   function bilingual(pair) {
-    if (!pair || typeof pair !== "object") { return escapeHtml(pair); }
-    if (!("jp" in pair) || !("en" in pair)) { return escapeHtml(pair); }
-    return '<span class="b-jp">' + escapeHtml(pair.jp) + '</span>' +
-      ' <span class="b-en">' + escapeHtml(pair.en) + '</span>';
+    return escapeHtml(t(pair));
   }
 
   function cardInner(day) {
-    return '<div class="day-badge">' + escapeHtml(day.dayLabel.jp + " / " + day.dayLabel.en) + '</div>' +
-      '<div class="day-date">' + escapeHtml(day.date) + ' (' + escapeHtml(day.weekday.jp) + ' / ' +
-      escapeHtml(day.weekday.en) + ')</div>' +
+    return '<div class="day-badge">' + escapeHtml(t(day.dayLabel)) + '</div>' +
+      '<div class="day-date">' + escapeHtml(day.date) + ' (' + escapeHtml(t(day.weekday)) + ')</div>' +
       '<div class="day-location">' + bilingual(day.location) + '</div>' +
       '<div class="day-theme">' + bilingual(day.theme) + '</div>' +
       '<div class="day-weather" data-id="' + escapeHtml(day.id) + '"></div>' +
@@ -144,8 +141,8 @@
       t({ jp: "プランを開く", en: "Open plan" }) +
       '</summary>' +
       renderPrograms(day.programs) +
-      renderEatSee({ jp: "食事 / Food", en: "Food" }, day.eat) +
-      renderEatSee({ jp: "観光 / Sights", en: "Sights" }, day.see) +
+      renderEatSee({ jp: "食事", en: "Food" }, day.eat) +
+      renderEatSee({ jp: "観光", en: "Sights" }, day.see) +
       '</details>';
   }
 
@@ -160,7 +157,7 @@
       card.setAttribute("data-id", day.id);
       card.setAttribute("tabindex", "0");
       card.setAttribute("role", "button");
-      card.setAttribute("aria-label", day.dayLabel.jp + " " + day.location.jp);
+      card.setAttribute("aria-label", t(day.dayLabel) + " " + t(day.location));
       card.innerHTML = cardInner(day);
       (function (d) {
         card.addEventListener("click", function () { openDetail(d); });
@@ -289,16 +286,15 @@
     var content = document.getElementById("detail-content");
     if (!panel || !content) { return; }
     var html =
-      '<div class="day-badge">' + escapeHtml(day.dayLabel.jp + " / " + day.dayLabel.en) + '</div>' +
-      '<div class="day-date">' + escapeHtml(day.date) + ' (' + escapeHtml(day.weekday.jp) + ' / ' +
-      escapeHtml(day.weekday.en) + ')</div>' +
+      '<div class="day-badge">' + escapeHtml(t(day.dayLabel)) + '</div>' +
+      '<div class="day-date">' + escapeHtml(day.date) + ' (' + escapeHtml(t(day.weekday)) + ')</div>' +
       '<h2>' + bilingual(day.location) + '</h2>' +
       '<p class="day-theme">' + bilingual(day.theme) + '</p>' +
       '<div class="detail-programs"><h3>' + t({ jp: "プログラム", en: "Program" }) + '</h3>' +
       renderPrograms(day.programs) + '</div>' +
       '<div class="detail-eat-see">' +
-      renderEatSee({ jp: "食事 / Food", en: "Food" }, day.eat) +
-      renderEatSee({ jp: "観光 / Sights", en: "Sights" }, day.see) +
+      renderEatSee({ jp: "食事", en: "Food" }, day.eat) +
+      renderEatSee({ jp: "観光", en: "Sights" }, day.see) +
       '</div>';
     if (day.routes && day.routes.length > 0) {
       html += '<div class="detail-routes"><h3>' + t({ jp: "道順", en: "Driving directions" }) + '</h3><ul>';
@@ -324,6 +320,57 @@
     document.body.style.overflow = "";
   }
 
+  // ---- static page text (hero, footer, chapter) ----
+
+  // Escapes text, then turns `code` into .chapter-code spans and **bold** into <b>.
+  function fmtInline(text) {
+    var out = escapeHtml(text);
+    out = out.split("`").map(function (part, i) {
+      return (i % 2 === 1)
+        ? '<span class="chapter-code">' + part + '</span>'
+        : part;
+    }).join("");
+    out = out.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+    return out;
+  }
+
+  function renderChapter() {
+    var host = document.getElementById("chapter-content");
+    if (!host) { return; }
+    var ch = TRIP.ui.chapter;
+    var html = '<h2 class="chapter-title">' + escapeHtml(t(ch.title)) + '</h2>' +
+      '<p class="chapter-intro">' + fmtInline(t(ch.intro)) + '</p>';
+    for (var i = 0; i < ch.sections.length; i++) {
+      var sec = ch.sections[i];
+      html += '<h3 class="chapter-sub">' + escapeHtml(t(sec.heading)) + '</h3>';
+      if (sec.list) {
+        html += '<' + sec.list + ' class="chapter-list">';
+        for (var j = 0; j < sec.items.length; j++) {
+          html += '<li>' + fmtInline(t(sec.items[j])) + '</li>';
+        }
+        html += '</' + sec.list + '>';
+      } else if (sec.paragraphs) {
+        for (var k = 0; k < sec.paragraphs.length; k++) {
+          html += '<p>' + fmtInline(t(sec.paragraphs[k])) + '</p>';
+        }
+      }
+    }
+    html += '<p class="chapter-intro">' + fmtInline(t(ch.closing)) + '</p>';
+    host.innerHTML = html;
+  }
+
+  function renderStatic() {
+    var ui = TRIP.ui;
+    var title = document.getElementById("trip-title");
+    if (title) { title.textContent = t(ui.heroTitle); }
+    var sub = document.getElementById("hero-sub");
+    if (sub) { sub.textContent = t(ui.heroSub); }
+    var note = document.getElementById("footer-note");
+    if (note) { note.textContent = t(ui.footerNote); }
+    if (document.title) { document.title = t(ui.heroTitle); }
+    renderChapter();
+  }
+
   // ---- init ----
 
   function init() {
@@ -343,6 +390,7 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { closeDetail(); }
     });
+    renderStatic();
     renderDayCards();
     syncLangToggle();
   }

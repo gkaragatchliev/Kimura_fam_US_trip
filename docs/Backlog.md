@@ -82,7 +82,7 @@ to GitHub Pages, verify on a phone.
 3. **TS-03 Data & Day Cards** — all 12 days render; program/eat/see collapsible blocks present per day.
 3b. **TS-03b Drive-Stop Dining** — both drive days (Hillsboro↔Bend) list ≥ 3 kid-friendly lunch/snack stops with maps links and family-friendly notes.
 4. **TS-04 Detail Panel** — clicking a card opens its detail panel with the right content.
-5. **TS-05 Bilingual JP/EN** — `t()` returns JP/EN; toggle flips all text without reload; dates/locations stay bilingual.
+5. **TS-05 Bilingual JP/EN** — `t()` returns JP/EN; toggle flips all text without reload; single-language view (whole page either JP or EN, never mixed).
 6. **TS-06 Directions** — every place has a one-click Google Maps `dir/?api=1` link with the correct origin/destination; opens in a new tab.
 7. **TS-07 Weather** — NWS live fetch succeeds or gracefully falls back to the NWS forecast-page link; shows temp + condition.
 8. **TS-08 Air Quality** — live AQI number + category with correct color coding; fallback to Fire & Smoke Map on failure.

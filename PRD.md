@@ -24,7 +24,8 @@ of the 7 days it shows:
   prominent **smoke alert banner** (late-summer Oregon) and a link to the AirNow Fire &
   Smoke Map.
 
-The site is **bilingual JP + EN** with a language toggle.
+The site is **bilingual JP + EN** with a language toggle: the whole page renders in
+**one language at a time** — completely Japanese or completely English (no mixed output).
 
 **Traveling party:** Kimura family **incl. a 5-year-old child** — all activities are
 selected with a young child in mind (short, low-effort, family-friendly, snacks/bathroom
@@ -335,7 +336,9 @@ Hotel in Fisherman's Wharf.**
 ### FR-2 言語切替 / Bilingual JP + EN
 - A header toggle switches all text between Japanese and English instantly (no reload).
 - Implementation: data fields carry `{ jp, en }`; strings render via a `t()` helper.
-  Dates/location names stay bilingual regardless of toggle.
+- **Single-language view**: the whole page (hero, cards, detail panel, footer, chapter)
+  renders in the active language only — completely Japanese or completely English,
+  never mixed. Toggling re-renders everything, including hero, footer, and chapter.
 
 ### FR-3 道順リンク / Driving directions (one click)
 - Each destination/place has a ready-made **Google Maps directions link**
@@ -461,7 +464,7 @@ websites (Hotspring_BG, personal_chef, Rafting_Trip_ideas). Each sprint is a
 |---|---|---|---|
 | **S1 — Foundation & Design System** | Scaffold + test infra, page skeleton, "Pacific NW" design tokens, day-card grid + detail panel shells, JP/EN toggle shell | `index.html`, `css/style.css`, `js/data.js` (empty `TRIP`), `js/app.js` (IIFE), `tests/site.test.js`, `package.json` | TS-01, TS-02 |
 | **S2 — Data & Day Cards** | Fill `js/data.js` with all 12 days (verified content), render cards + collapsible program/eat/see blocks | `js/data.js` content, card renderer | TS-03, TS-04 |
-| **S3 — Bilingual JP/EN** | `t()` helper, language toggle (no reload), full translation of all text, dates stay bilingual | language switch in `js/app.js` | TS-05 |
+| **S3 — Bilingual JP/EN** | `t()` helper, language toggle (no reload), full translation of all text, single-language view (whole page either JP or EN, never mixed) | language switch in `js/app.js` | TS-05 |
 | **S4 — Directions & Weather** | One-click Google Maps direction buttons per place, NWS live weather fetch + fallback link | directions renderer, weather widget | TS-06, TS-07 |
 | **S5 — Air Quality & Smoke** | Live AQI (keyless `fire.airnow.gov`), color-coded AQI, **smoke alert banner** (AQI ≥ 101) with Fire & Smoke Map link | AQI widget, smoke banner | TS-08, TS-09 |
 | **S6 — Polish & Launch** | Accessibility, responsive QA, cache-busting `?v=N`, XSS pass, final `npm test`, deploy to GitHub Pages, verify on a phone | all files | TS-10 → TS-13 |

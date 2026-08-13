@@ -14,133 +14,37 @@
   <meta name="twitter:title" content="キムラ家 アメリカ旅行 2026 / Kimura Family US Trip 2026">
   <meta name="twitter:description" content="2026年8月12日〜23日・米国西海岸の12日間プラン / 12-day US West Coast plan, Aug 12–23 2026">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
   <header class="site-header">
     <div class="hero container">
-      <h1 id="trip-title">
-        <span class="hero-jp">キムラ家 アメリカ旅行 2026</span>
-        <span class="hero-en">Kimura Family US Trip 2026</span>
-      </h1>
-      <p class="hero-sub" data-i18n="heroSub">2026年8月12日〜23日・米国西海岸 | Aug 12–23, 2026 · US West Coast</p>
+      <h1 id="trip-title"></h1>
+      <p class="hero-sub" id="hero-sub"></p>
       <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false">🇺🇸 English</button>
     </div>
   </header>
 
   <main class="container">
-    <section id="day-grid" class="day-grid" aria-label="旅程 / Itinerary"></section>
+    <section id="day-grid" class="day-grid" aria-label="旅程"></section>
 
     <section id="detail-panel" class="detail-panel hidden" aria-hidden="true">
       <div class="detail-inner">
-        <button id="detail-close" class="detail-close" type="button" aria-label="閉じる / Close">✕</button>
+        <button id="detail-close" class="detail-close" type="button" aria-label="閉じる">✕</button>
         <div id="detail-content"></div>
       </div>
     </section>
   </main>
 
   <section id="how-built" class="chapter container">
-    <h2 class="chapter-title">
-      <span class="hero-jp">このサイトができるまで</span>
-      <span class="hero-en">How This Site Was Built</span>
-    </h2>
-    <p class="chapter-intro">
-      このページは、要件定義（PRD）→ テスト駆動開発（TDD）→ GitHub への公開という手順で、
-      1週間かからずに作られました。下記に道のり・ツール・手順をまとめます。
-      <br>This page was built in under a week by following: requirements (PRD) → test-driven
-      development (TDD) → publish on GitHub. Here is the path, the tools, and the steps.
-    </p>
-
-    <h3 class="chapter-sub">
-      <span class="hero-jp">1. 作った道のり</span>
-      <span class="hero-en">1. The Path We Took</span>
-    </h3>
-    <ol class="chapter-list">
-      <li><b>PRD（要件定義書）を書く</b> — 旅行の日数・宿泊先・食事・注意点をすべて日本語＋英語で整理し、曖昧な点は「確認待ち」と明記しました。</li>
-      <li><b>バックログとステータスボードを作る</b> — 何をいつ作るかを一覧にし、各スプリントの進捗を記録しました。</li>
-      <li><b>TDD（テスト駆動開発）で作る</b> — まずテストを書き（失敗を確認）、その次に機能を実装し（成功を確認）、最後にボードを更新、を6回繰り返しました。</li>
-      <li><b>GitHub Pages に公開</b> — 全テスト（54件）が通った後、リポジトリを作成し公開しました。</li>
-    </ol>
-
-    <h3 class="chapter-sub">
-      <span class="hero-jp">2. 使ったソフトウェアとインストール方法</span>
-      <span class="hero-en">2. Software Tools &amp; How to Install Them</span>
-    </h3>
-    <ul class="chapter-list">
-      <li><b>Node.js</b> — テストを動かすための実行環境。
-        <span class="chapter-code">https://nodejs.org</span> からLTS版をダウンロードしてインストール。
-        確認: <span class="chapter-code">node --version</span></li>
-      <li><b>npm</b> — Node.jsに同梱のパッケージ管理ツール。確認: <span class="chapter-code">npm --version</span></li>
-      <li><b>jsdom</b> — ブラウザをエミュレートしてテストするためのライブラリ。
-        インストール: <span class="chapter-code">npm install --save-dev jsdom</span></li>
-      <li><b>Git</b> — ファイルの履歴管理とGitHubへの送信ツール。
-        <span class="chapter-code">https://git-scm.com</span> からダウンロード。確認: <span class="chapter-code">git --version</span></li>
-      <li><b>GitHub</b> — コードの保管と無料のWeb公開（GitHub Pages）ができるサービス。</li>
-      <li><b>エディタ（任意）</b> — VS Code など。無くてもメモ帳で編集可能です。</li>
-      <li><b>ローカル確認</b> — <span class="chapter-code">python -m http.server 8000</span> を実行し
-        <span class="chapter-code">http://localhost:8000</span> を開くと、公開前に画面を確認できます。</li>
-    </ul>
-
-    <h3 class="chapter-sub">
-      <span class="hero-jp">3. GitHub アカウント作成と公開手順</span>
-      <span class="hero-en">3. GitHub Account &amp; Publishing Steps</span>
-    </h3>
-    <ol class="chapter-list">
-      <li><b>アカウント作成:</b> <span class="chapter-code">https://github.com</span> を開き「Sign up」。
-        ユーザー名・メール・パスワードを入力して登録します（無料）。</li>
-      <li><b>リポジトリ作成:</b> 右上の「＋」→「New repository」→ 名前を入力し Public を選択 → Create。</li>
-      <li><b>ローカルに送信（公開）:</b>
-        <span class="chapter-code">git init</span> →
-        <span class="chapter-code">git add .</span> →
-        <span class="chapter-code">git commit -m "最初の公開"</span> →
-        <span class="chapter-code">git remote add origin https://github.com/ユーザー名/リポジトリ名.git</span> →
-        <span class="chapter-code">git push -u origin main</span></li>
-      <li><b>GitHub Pages を有効化:</b> リポジトリの Settings → Pages → 「Deploy from a branch」→
-        main / root を選択 → Save。数分後に
-        <span class="chapter-code">https://ユーザー名.github.io/リポジトリ名/</span> で公開されます。</li>
-    </ol>
-
-    <h3 class="chapter-sub">
-      <span class="hero-jp">4. PRD とテスト駆動開発（TDD）</span>
-      <span class="hero-en">4. PRD &amp; Test-Driven Development</span>
-    </h3>
-    <p>
-      <b>PRD</b>（Product Requirements Document = 製品要件定義書）とは、コードを書く前に
-      「何を作るか」を文章で決める契約書です。目的・日数・機能・成功条件・未確定事項を書くことで、
-      作る人と頼む人が同じ認識を持てます。このプロジェクトでは <span class="chapter-code">PRD.md</span> にまとめました。
-    </p>
-    <p>
-      <b>TDD</b>（テスト駆動開発）は「Red → Green」の繰り返しです。
-      <span class="chapter-code">Red</span>: 最初にテストを書いて、まだ実装がないので失敗するのを確認 →
-      <span class="chapter-code">Green</span>: 最小の実装を書いてテストが通るのを確認 →
-      ボードに記録、をスプリントごとに繰り返します。全テストは
-      <span class="chapter-code">npm test</span> 一発で実行でき、公開前に壊れていないことを保証します。
-    </p>
-
-    <h3 class="chapter-sub">
-      <span class="hero-jp">5. 言葉でLLMに指示を出すコツ</span>
-      <span class="hero-en">5. How to Verbally Command an LLM</span>
-    </h3>
-    <ul class="chapter-list">
-      <li><b>ゴールを最初に言う:</b> 「TDDで作り、GitHub Pagesに公開して」のように目的と締切を明確に。</li>
-      <li><b>制約を先に伝える:</b> 「5歳児がいる家族向け」「日本語と英語の両方」など、忘れてほしくない条件を先に並べます。</li>
-      <li><b>何を・どこまでやるか指示する:</b> 「カードをクリックしたら詳細パネルが開くところまで」と停止点を指定。</li>
-      <li><b>1つの依頼に1つの作業:</b> 細かく分けて指示すると失敗が減ります。</li>
-      <li><b>途中で止める指示を出す:</b> 「ここで止めて」「続けて」「何が残ってる?」で進行を制御。</li>
-      <li><b>不明点は確認させる:</b> 「わからない時は聞いて」と伝えると、勝手な推測を防げます。</li>
-    </ul>
-
-    <p class="chapter-intro">
-      <span class="hero-jp">以上で、このサイトは完成・公開済みです。</span>
-      <br><span class="hero-en">That's it — the site is complete and published.</span>
-    </p>
+    <div id="chapter-content"></div>
   </section>
 
   <footer class="site-footer">
-    <p data-i18n="footerNote">家族旅行用プランナー（GitHub Pages） / Family trip planner (GitHub Pages)</p>
+    <p id="footer-note"></p>
   </footer>
 
-  <script src="js/data.js?v=5"></script>
-  <script src="js/app.js?v=5"></script>
+  <script src="js/data.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

@@ -48,7 +48,7 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | # | Test | Expected | Status |
 |---|------|----------|--------|
 | 04 | Page skeleton present | header hero + main + footer | ✅ |
-| 05 | Hero with trip title | bilingual trip title rendered | ✅ |
+| 05 | Hero with trip title | title renders in the active language only (toggle switches it) | ✅ |
 | 06 | JP/EN toggle present | toggle control in header | ✅ |
 | 07 | Pacific NW tokens | CSS custom properties (teal/sage) resolve | ✅ |
 | 08 | Day-card grid renders | empty grid container + card shells render | ✅ |
@@ -59,8 +59,8 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | # | Test | Expected | Status |
 |---|------|----------|--------|
 | 10 | 12 day cards render | one card per day, in trip order | ✅ |
-| 11 | Day badge + date | day label + date (JP + EN) on each card | ✅ |
-| 12 | Location + theme | shown on each card | ✅ |
+| 11 | Day badge + date | day label + date in the active language | ✅ |
+| 12 | Location + theme | shown in the active language | ✅ |
 | 13 | Program blocks | collapsible program items per day | ✅ |
 | 14 | Eat blocks | collapsible eat items with note + maps link | ✅ |
 | 15 | See blocks | collapsible see items with note + maps link | ✅ |
@@ -78,8 +78,8 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | # | Test | Expected | Status |
 |---|------|----------|--------|
 | 19 | `t()` returns JP | default language is Japanese | ✅ |
-| 20 | Toggle flips text | all text switches EN→JP instantly (no reload) | ✅ |
-| 21 | Dates stay bilingual | date/location names keep JP + EN regardless | ✅ |
+| 20 | Toggle flips text | all text switches JA→EN instantly (no reload) | ✅ |
+| 21 | Toggle makes page single-language | whole page English (or Japanese), no other language visible | ✅ |
 | 22 | State persists | language choice remembered on reload | ✅ |
 
 ### TS-06: Directions
@@ -150,7 +150,7 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | 49 | Favicon linked + exists | `assets/favicon.svg` | ✅ |
 | 50 | robots.txt | User-agent + Allow + Sitemap | ✅ |
 | 51 | sitemap.xml | valid XML | ✅ |
-| 52 | Styled 404 page | bilingual, one h1, link home | ✅ |
+| 52 | Styled 404 page | single-language (ja), one h1, link home | ✅ |
 
 ---
 
@@ -172,8 +172,8 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | TS-11 Performance & QA | 4 | 4 | 0 |
 | TS-12 Accessibility & Responsive | 5 | 5 | 0 |
 | TS-13 Launch Readiness | 6 | 6 | 0 |
-| TS-13c How-Built Chapter | 2 | 2 | 0 |
-| **Total** | **56** | **56** | **0** |
+| TS-13c How-Built Chapter | 3 | 3 | 0 |
+| **Total** | **57** | **57** | **0** |
 
 ---
 

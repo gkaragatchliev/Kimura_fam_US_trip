@@ -125,13 +125,17 @@ test("04 page skeleton present (header + main + footer)", () => {
   assert.ok(d.querySelector("footer"), "footer exists");
 });
 
-test("05 hero with bilingual trip title", () => {
-  const d = fresh().window.document;
+test("05 hero title renders in the active language only", () => {
+  const w = fresh().window;
+  const d = w.document;
   const h1 = d.getElementById("trip-title");
   assert.ok(h1, "h1#trip-title exists");
   assert.ok(h1.textContent.trim().length > 0, "title non-empty");
-  assert.ok(/[\u3040-\u30ff\u4e00-\u9fff]/.test(h1.textContent), "title contains Japanese");
-  assert.ok(/[A-Za-z]/.test(h1.textContent), "title contains English");
+  assert.ok(/[\u3040-\u30ff\u4e00-\u9fff]/.test(h1.textContent), "default (ja) shows Japanese");
+  assert.ok(!/[A-Za-z]{2,}/.test(h1.textContent), "no English title in ja mode");
+  click(w, d.getElementById("lang-toggle"));
+  assert.ok(/Kimura Family US Trip/.test(h1.textContent), "EN mode shows English title");
+  assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/.test(h1.textContent), "no Japanese title in en mode");
 });
 
 test("06 JP/EN toggle present in header", () => {
@@ -177,28 +181,24 @@ test("10 all 12 day cards render, in trip order", () => {
   });
 });
 
-test("11 day badge + date (JP + EN) on each card", () => {
+test("11 day badge + date render in the active language", () => {
   const d = fresh().window.document;
   const cards = d.querySelectorAll("#day-grid .day-card");
   DAYS.forEach((day, i) => {
     const card = cards[i];
     assert.ok(card.querySelector(".day-badge").textContent.includes(day.dayLabel.jp), day.id + " JP label");
-    assert.ok(card.querySelector(".day-badge").textContent.includes(day.dayLabel.en), day.id + " EN label");
     assert.ok(card.querySelector(".day-date").textContent.includes(day.date), day.id + " date");
     assert.ok(card.querySelector(".day-date").textContent.includes(day.weekday.jp), day.id + " weekday JP");
-    assert.ok(card.querySelector(".day-date").textContent.includes(day.weekday.en), day.id + " weekday EN");
   });
 });
 
-test("12 location + theme shown on each card", () => {
+test("12 location + theme render in the active language", () => {
   const d = fresh().window.document;
   const cards = d.querySelectorAll("#day-grid .day-card");
   DAYS.forEach((day, i) => {
     const card = cards[i];
     assert.ok(card.querySelector(".day-location").textContent.includes(day.location.jp), day.id + " location JP");
-    assert.ok(card.querySelector(".day-location").textContent.includes(day.location.en), day.id + " location EN");
     assert.ok(card.querySelector(".day-theme").textContent.includes(day.theme.jp), day.id + " theme JP");
-    assert.ok(card.querySelector(".day-theme").textContent.includes(day.theme.en), day.id + " theme EN");
   });
 });
 
@@ -332,15 +332,15 @@ test("20 toggle flips all text to English without reload", () => {
   assert.ok(d.documentElement.getAttribute("data-lang") === "ja", "toggles back to Japanese");
 });
 
-test("21 dates/location stay bilingual regardless of toggle", () => {
+test("21 toggling switches the whole page to English (no Japanese left)", () => {
   const w = fresh().window;
   const d = w.document;
   click(w, d.getElementById("lang-toggle")); // switch to EN
   const card = d.querySelector('#day-grid .day-card[data-id="day4-bachelor"]');
-  assert.ok(card.querySelector(".day-badge").textContent.includes("4日目"), "JP day label");
   assert.ok(card.querySelector(".day-badge").textContent.includes("Day 4"), "EN day label");
-  assert.ok(card.querySelector(".day-location").textContent.includes("マウントバチェラー"), "JP location");
   assert.ok(card.querySelector(".day-location").textContent.includes("Mt. Bachelor"), "EN location");
+  assert.ok(card.querySelector(".day-location").textContent.includes("Mt. Bachelor"), "EN location");
+  assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/.test(card.querySelector(".day-location").textContent), "no Japanese in location");
 });
 
 test("22 language choice persists on reload", () => {
@@ -565,7 +565,7 @@ test("35 escapeHtml neutralizes hostile input in cards", () => {
   assert.ok(!card.querySelector("img"), "no img element injected");
   assert.ok(!card.querySelector("script"), "no script element injected");
   assert.ok(
-    card.querySelector(".day-location .b-jp").textContent.indexOf("<img") !== -1,
+    card.querySelector(".day-location").textContent.indexOf("<img") !== -1,
     "escaped text preserved"
   );
 });
@@ -747,18 +747,33 @@ test("52b homepage has a bottom chapter documenting the build path", () => {
   const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   assert.ok(/id="how-built"/.test(html), "chapter section id=how-built present");
   assert.ok(html.indexOf('id="how-built"') > html.indexOf('id="day-grid"'), "chapter sits after the itinerary (bottom of content)");
-  assert.ok(/Node\.js/.test(html), "mentions Node.js");
-  assert.ok(/jsdom/.test(html), "mentions jsdom");
-  assert.ok(/npm/.test(html), "mentions npm");
-  assert.ok(/git/.test(html), "mentions git");
-  assert.ok(/GitHub/.test(html), "mentions GitHub");
+  const d = fresh().window.document;
+  const ch = d.getElementById("how-built");
+  assert.ok(ch, "chapter rendered");
+  const text = ch.textContent;
+  assert.ok(/Node\.js/.test(text), "mentions Node.js");
+  assert.ok(/jsdom/.test(text), "mentions jsdom");
+  assert.ok(/npm/.test(text), "mentions npm");
+  assert.ok(/git/.test(text), "mentions git");
+  assert.ok(/GitHub/.test(text), "mentions GitHub");
 });
 
 test("52c chapter covers PRD, TDD, GitHub posting, and LLM prompting", () => {
-  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
-  assert.ok(/PRD/.test(html), "explains PRD");
-  assert.ok(/TDD|Red|Green|テスト駆動/.test(html), "explains TDD Red/Green");
-  assert.ok(/github\.com|アカウント|account/i.test(html), "covers GitHub account + posting");
-  assert.ok(/LLM|プロンプト|prompt|命令/i.test(html), "covers verbally commanding an LLM");
-  assert.ok(/install|インストール|setup|セットアップ/i.test(html), "covers install/setup");
+  const d = fresh().window.document;
+  const text = d.getElementById("how-built").textContent;
+  assert.ok(/PRD/.test(text), "explains PRD");
+  assert.ok(/TDD|Red|Green|テスト駆動/.test(text), "explains TDD Red/Green");
+  assert.ok(/github\.com|アカウント|account/i.test(text), "covers GitHub account + posting");
+  assert.ok(/LLM|プロンプト|prompt|命令/i.test(text), "covers verbally commanding an LLM");
+  assert.ok(/install|インストール|setup|セットアップ/i.test(text), "covers install/setup");
+});
+
+test("52d chapter switches language with the toggle", () => {
+  const w = fresh().window;
+  const d = w.document;
+  assert.ok(/[\u3040-\u30ff\u4e00-\u9fff]/.test(d.getElementById("how-built").textContent), "ja chapter has Japanese");
+  click(w, d.getElementById("lang-toggle"));
+  const text = d.getElementById("how-built").textContent;
+  assert.ok(/How This Site Was Built/.test(text), "en chapter title");
+  assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/.test(text.replace(/Node\.js|jsdom|npm|git|GitHub|PRD|TDD|LLM|Red|Green|https?|localhost/g, "")), "no Japanese left in en chapter");
 });

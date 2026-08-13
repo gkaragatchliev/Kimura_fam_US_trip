@@ -7,6 +7,77 @@ var TRIP = {
     cacheVersion: 1,
     smokeThresholdAQI: 101
   },
+
+  // Page text that is not part of a day card. Every visible string is
+  // { jp, en }; app.js renders the active language only (single-language view).
+  ui: {
+    heroTitle: { jp: "キムラ家 アメリカ旅行 2026", en: "Kimura Family US Trip 2026" },
+    heroSub: { jp: "2026年8月12日〜23日・米国西海岸", en: "Aug 12–23, 2026 · US West Coast" },
+    footerNote: { jp: "家族旅行用プランナー（GitHub Pages）", en: "Family trip planner (GitHub Pages)" },
+    chapter: {
+      title: { jp: "このサイトができるまで", en: "How This Site Was Built" },
+      intro: {
+        jp: "このページは、要件定義（PRD）→ テスト駆動開発（TDD）→ GitHub への公開という手順で、1週間かからずに作られました。下記に道のり・ツール・手順をまとめます。",
+        en: "This page was built in under a week by following: requirements (PRD) → test-driven development (TDD) → publish on GitHub. Here are the path, the tools, and the steps."
+      },
+      sections: [
+        {
+          heading: { jp: "1. 作った道のり", en: "1. The Path We Took" },
+          list: "ol",
+          items: [
+            { jp: "**PRD（要件定義書）を書く** — 旅行の日数・宿泊先・食事・注意点をすべて日本語＋英語で整理し、曖昧な点は「確認待ち」と明記しました。", en: "**Write the PRD (requirements)** — organize the trip's days, hotels, meals, and notes in JP+EN, flagging anything unclear as \"to confirm\"." },
+            { jp: "**バックログとステータスボードを作る** — 何をいつ作るかを一覧にし、各スプリントの進捗を記録しました。", en: "**Create a backlog and status board** — list what to build and when, tracking each sprint's progress." },
+            { jp: "**TDD（テスト駆動開発）で作る** — まずテストを書き（失敗を確認）、その次に機能を実装し（成功を確認）、最後にボードを更新、を6回繰り返しました。", en: "**Build with TDD** — write a failing test first (Red), then implement to make it pass (Green), then update the board; repeated 6 times." },
+            { jp: "**GitHub Pages に公開** — 全テストが通った後、リポジトリを作成し公開しました。", en: "**Publish on GitHub Pages** — after all tests passed, create the repository and publish." }
+          ]
+        },
+        {
+          heading: { jp: "2. 使ったソフトウェアとインストール方法", en: "2. Software Tools & How to Install Them" },
+          list: "ul",
+          items: [
+            { jp: "**Node.js** — テストを動かすための実行環境。 `https://nodejs.org` からLTS版をダウンロードしてインストール。 確認: `node --version`", en: "**Node.js** — the runtime that runs the tests. Download the LTS build from `https://nodejs.org` and install. Verify: `node --version`" },
+            { jp: "**npm** — Node.jsに同梱のパッケージ管理ツール。確認: `npm --version`", en: "**npm** — package manager bundled with Node.js. Verify: `npm --version`" },
+            { jp: "**jsdom** — ブラウザをエミュレートしてテストするためのライブラリ。 インストール: `npm install --save-dev jsdom`", en: "**jsdom** — a library that emulates a browser so tests can run. Install: `npm install --save-dev jsdom`" },
+            { jp: "**Git** — ファイルの履歴管理とGitHubへの送信ツール。 `https://git-scm.com` からダウンロード。確認: `git --version`", en: "**Git** — version control and pushing to GitHub. Download from `https://git-scm.com`. Verify: `git --version`" },
+            { jp: "**GitHub** — コードの保管と無料のWeb公開（GitHub Pages）ができるサービス。", en: "**GitHub** — hosts your code and publishes it free on the web (GitHub Pages)." },
+            { jp: "**エディタ（任意）** — VS Code など。無くてもメモ帳で編集可能です。", en: "**Editor (optional)** — e.g. VS Code. Even Notepad works." },
+            { jp: "**ローカル確認** — `python -m http.server 8000` を実行し `http://localhost:8000` を開くと、公開前に画面を確認できます。", en: "**Local preview** — run `python -m http.server 8000` and open `http://localhost:8000` to preview before publishing." }
+          ]
+        },
+        {
+          heading: { jp: "3. GitHub アカウント作成と公開手順", en: "3. GitHub Account & Publishing Steps" },
+          list: "ol",
+          items: [
+            { jp: "**アカウント作成:** `https://github.com` を開き「Sign up」。ユーザー名・メール・パスワードを入力して登録します（無料）。", en: "**Create an account:** open `https://github.com` and click \"Sign up\". Register with a username, email, and password (free)." },
+            { jp: "**リポジトリ作成:** 右上の「＋」→「New repository」→ 名前を入力し Public を選択 → Create。", en: "**Create a repository:** \"+\" (top right) → \"New repository\" → enter a name, choose Public → Create." },
+            { jp: "**ローカルに送信（公開）:** `git init` → `git add .` → `git commit -m \"最初の公開\"` → `git remote add origin https://github.com/ユーザー名/リポジトリ名.git` → `git push -u origin main`", en: "**Publish locally:** `git init` → `git add .` → `git commit -m \"first publish\"` → `git remote add origin https://github.com/USERNAME/REPO.git` → `git push -u origin main`" },
+            { jp: "**GitHub Pages を有効化:** リポジトリの Settings → Pages → 「Deploy from a branch」→ main / root を選択 → Save。数分後に `https://ユーザー名.github.io/リポジトリ名/` で公開されます。", en: "**Enable GitHub Pages:** repo Settings → Pages → \"Deploy from a branch\" → choose main / root → Save. Within minutes it is live at `https://USERNAME.github.io/REPO/`." }
+          ]
+        },
+        {
+          heading: { jp: "4. PRD とテスト駆動開発（TDD）", en: "4. PRD & Test-Driven Development" },
+          paragraphs: [
+            { jp: "**PRD**（Product Requirements Document = 製品要件定義書）とは、コードを書く前に「何を作るか」を文章で決める契約書です。目的・日数・機能・成功条件・未確定事項を書くことで、作る人と頼む人が同じ認識を持てます。このプロジェクトでは `PRD.md` にまとめました。", en: "A **PRD** (Product Requirements Document) is a contract written before any code that defines what will be built. Listing the goals, days, features, success criteria, and open items ensures the builder and requester share the same understanding. Here it lives in `PRD.md`." },
+            { jp: "**TDD**（テスト駆動開発）は「Red → Green」の繰り返しです。 `Red`: 最初にテストを書いて、まだ実装がないので失敗するのを確認 → `Green`: 最小の実装を書いてテストが通るのを確認 → ボードに記録、をスプリントごとに繰り返します。全テストは `npm test` 一発で実行でき、公開前に壊れていないことを保証します。", en: "**TDD** (test-driven development) is a \"Red → Green\" loop. `Red`: write a test first and watch it fail (no implementation yet) → `Green`: write the minimal implementation and watch it pass → record it on the board, repeating each sprint. The full suite runs with a single `npm test`, guaranteeing nothing is broken before publishing." }
+          ]
+        },
+        {
+          heading: { jp: "5. 言葉でLLMに指示を出すコツ", en: "5. How to Verbally Command an LLM" },
+          list: "ul",
+          items: [
+            { jp: "**ゴールを最初に言う:** 「TDDで作り、GitHub Pagesに公開して」のように目的と締切を明確に。", en: "**State the goal first:** be clear about the objective and deadline, e.g. \"build with TDD and publish to GitHub Pages.\"" },
+            { jp: "**制約を先に伝える:** 「5歳児がいる家族向け」「日本語と英語の両方」など、忘れてほしくない条件を先に並べます。", en: "**List constraints up front:** anything you don't want forgotten, e.g. \"for a family with a 5-year-old\" or \"in both Japanese and English.\"" },
+            { jp: "**何を・どこまでやるか指示する:** 「カードをクリックしたら詳細パネルが開くところまで」と停止点を指定。", en: "**Specify what and where to stop:** e.g. \"until clicking a card opens the detail panel.\"" },
+            { jp: "**1つの依頼に1つの作業:** 細かく分けて指示すると失敗が減ります。", en: "**One request, one task:** smaller instructions fail less." },
+            { jp: "**途中で止める指示を出す:** 「ここで止めて」「続けて」「何が残ってる?」で進行を制御。", en: "**Control progress:** \"stop here,\" \"continue,\" \"what's left?\" steer the work." },
+            { jp: "**不明点は確認させる:** 「わからない時は聞いて」と伝えると、勝手な推測を防げます。", en: "**Let it ask when unclear:** \"ask me when you don't understand\" prevents wrong guesses." }
+          ]
+        }
+      ],
+      closing: { jp: "以上で、このサイトは完成・公開済みです。", en: "That's it — the site is complete and published." }
+    }
+  },
+
   days: [
     // ---------------------------------------------------------------
     // Day 1 — Wed Aug 12 — Hillsboro, OR — arrival & explore
