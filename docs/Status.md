@@ -4,13 +4,14 @@
 
 ## Current Status
 
-**All 54 tests pass — the site is feature-complete, deployed, and live.** Foundation, design
+**All 56 tests pass — the site is feature-complete, deployed, and live.** Foundation, design
 system, all 12 day cards, detail panel (TS-01 → TS-04), full bilingual JP/EN toggle with
 persistence (TS-05), one-click directions (TS-06), live NWS weather + fallback (TS-07),
 AirNow AQI + fallback (TS-08), smoke alert banner at AQI ≥ 101 (TS-09), XSS escaping +
 link integrity (TS-10), cache-busting `?v=N` + perf/QA (TS-11), accessibility & responsive
-breakpoints (TS-12), launch readiness meta/favicon/robots/sitemap/404 (TS-13), and
-kid-friendly drive-stop dining (TS-03b) are all implemented and green.
+breakpoints (TS-12), launch readiness meta/favicon/robots/sitemap/404 (TS-13),
+kid-friendly drive-stop dining (TS-03b), and the "How This Site Was Built" chapter
+(TS-13c) are all implemented and green.
 
 **Deployed to GitHub Pages (public): https://gkaragatchliev.github.io/Kimura_fam_US_trip/**
 Verified live: all 12 day cards render, weather + AQI slots present, Day 2 shows 4 dining
@@ -171,7 +172,8 @@ Each test is a pass/fail check against the PRD / Backlog requirements. No test w
 | TS-11 Performance & QA | 4 | 4 | 0 |
 | TS-12 Accessibility & Responsive | 5 | 5 | 0 |
 | TS-13 Launch Readiness | 6 | 6 | 0 |
-| **Total** | **54** | **54** | **0** |
+| TS-13c How-Built Chapter | 2 | 2 | 0 |
+| **Total** | **56** | **56** | **0** |
 
 ---
 

@@ -738,3 +738,27 @@ test("52 styled 404 page: bilingual, one h1, link home", () => {
   assert.ok(d.querySelector("a[href='/']") || d.querySelector("a[href='index.html']"), "link home");
   assert.ok(/lang=["']ja["']/.test(html), "JP content present");
 });
+
+// ---------------------------------------------------------------------------
+// TS-13c "How this site was built" chapter (bottom of the homepage)
+// ---------------------------------------------------------------------------
+
+test("52b homepage has a bottom chapter documenting the build path", () => {
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  assert.ok(/id="how-built"/.test(html), "chapter section id=how-built present");
+  assert.ok(html.indexOf('id="how-built"') > html.indexOf('id="day-grid"'), "chapter sits after the itinerary (bottom of content)");
+  assert.ok(/Node\.js/.test(html), "mentions Node.js");
+  assert.ok(/jsdom/.test(html), "mentions jsdom");
+  assert.ok(/npm/.test(html), "mentions npm");
+  assert.ok(/git/.test(html), "mentions git");
+  assert.ok(/GitHub/.test(html), "mentions GitHub");
+});
+
+test("52c chapter covers PRD, TDD, GitHub posting, and LLM prompting", () => {
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  assert.ok(/PRD/.test(html), "explains PRD");
+  assert.ok(/TDD|Red|Green|テスト駆動/.test(html), "explains TDD Red/Green");
+  assert.ok(/github\.com|アカウント|account/i.test(html), "covers GitHub account + posting");
+  assert.ok(/LLM|プロンプト|prompt|命令/i.test(html), "covers verbally commanding an LLM");
+  assert.ok(/install|インストール|setup|セットアップ/i.test(html), "covers install/setup");
+});

@@ -70,6 +70,7 @@ to GitHub Pages, verify on a phone.
 | P0 | S6 | XSS escaping pass | TS-10 | ✅ DONE |
 | P0 | S6 | Deploy to GitHub Pages + phone verification | — | ✅ DONE — live at https://gkaragatchliev.github.io/Kimura_fam_US_trip/ |
 | P1 | S6 | Launch readiness: OG/Twitter meta, favicon, robots.txt, sitemap.xml, 404 | TS-13 | ✅ DONE |
+| P2 | S6 | "How This Site Was Built" chapter (tools, install, GitHub, PRD/TDD, LLM prompting) | TS-13c | ✅ DONE |
 | P2 | Future | Offline caching (service worker) if family reports poor signal | — | ⬜ NOT STARTED |
 
 ---
